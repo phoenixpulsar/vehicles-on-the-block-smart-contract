@@ -14,3 +14,8 @@ export class Vehicle {}
 export class VehicleService {}
 @nearBindgen
 export class VehicleGarage {}
+
+const vehicles = new PersistentMap<VehicleId, Vehicle>("v");
+const vehicleService = new PersistentMap<VehicleServiceId, VehicleService>(
+  "vs"
+);
