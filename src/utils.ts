@@ -1,5 +1,18 @@
 import { u128, Context, ContractPromise } from "near-sdk-as";
 
+export const GARAGE_KEY = "state";
+export type VehicleId = string;
+export type VehicleServiceId = string;
+/**
+ * @function idCreator
+ * @return {string}
+ * Creates a unique id by combining sender + block height
+ */
+export function idCreator(): string {
+  let id = Context.blockIndex.toString();
+  return id;
+}
+
 /**
  * == TYPES ====================================================================
  */
@@ -73,20 +86,20 @@ export function asNEAR(amount: u128): string {
  *    // => 7000000000000000000000000
  */
 export function toYocto(amount: number): u128 {
-  return u128.mul(ONE_NEAR, u128.from(amount))
+  return u128.mul(ONE_NEAR, u128.from(amount));
 }
 
 /**
  * Function to assert that the contract has called itself
  */
 export function assert_self(): void {
-  const caller = Context.predecessor
-  const self = Context.contractName
+  const caller = Context.predecessor;
+  const self = Context.contractName;
   assert(caller == self, "Only this contract may call itself");
 }
 
 export function assert_single_promise_success(): void {
-  const x = ContractPromise.getResults()
-  assert(x.length == 1, "Expected exactly one promise result")
-  assert(x[0].succeeded, "Expected PromiseStatus to be successful")
+  const x = ContractPromise.getResults();
+  assert(x.length == 1, "Expected exactly one promise result");
+  assert(x[0].succeeded, "Expected PromiseStatus to be successful");
 }
