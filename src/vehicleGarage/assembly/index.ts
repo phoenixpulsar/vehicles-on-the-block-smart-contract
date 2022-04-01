@@ -1,3 +1,6 @@
+import { VehicleId, VehicleServiceId, AccountId } from "../../utils";
+import { VehicleGarage } from "../models";
+
 export function init(): void {}
 export function get_vehicle_garage(): VehicleGarage {}
 export function add_vehicle(): void {}
