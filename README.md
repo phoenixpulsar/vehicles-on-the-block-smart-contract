@@ -11,30 +11,10 @@ The example here is very basic.  It's a simple contract demonstrating the follow
 - the difference between `view` vs. `change` methods
 - basic contract storage
 
-There are 2 AssemblyScript contracts in this project, each in their own folder:
+AssemblyScript contract
 
-- **simple** in the `src/simple` folder
 - **singleton** in the `src/singleton` folder
 
-### Simple
-
-We say that an AssemblyScript contract is written in the "simple style" when the `index.ts` file (the contract entry point) includes a series of exported functions.
-
-In this case, all exported functions become public contract methods.
-
-```ts
-// return the string 'hello world'
-export function helloWorld(): string {}
-
-// read the given key from account (contract) storage
-export function read(key: string): string {}
-
-// write the given value at the given key to account (contract) storage
-export function write(key: string, value: string): string {}
-
-// private helper method used by read() and write() above
-private storageReport(): string {}
-```
 
 ### Singleton
 
@@ -139,13 +119,6 @@ export BENEFICIARY=<your-account-here>   # this account receives contract accoun
 │   └── README.md                      # documentation for helper scripts
 ├── src
 │   ├── as_types.d.ts                  # AssemblyScript headers for type hints
-│   ├── simple                         # Contract 1: "Simple example"
-│   │   ├── __tests__
-│   │   │   ├── as-pect.d.ts           # as-pect unit testing headers for type hints
-│   │   │   └── index.unit.spec.ts     # unit tests for contract 1
-│   │   ├── asconfig.json              # configuration for AssemblyScript compiler (one per contract)
-│   │   └── assembly
-│   │       └── index.ts               # contract code for contract 1
 │   ├── singleton                      # Contract 2: "Singleton-style example"
 │   │   ├── __tests__
 │   │   │   ├── as-pect.d.ts           # as-pect unit testing headers for type hints
