@@ -1,25 +1,47 @@
-import { Contract } from "../assembly";
+import { VMContext, PersistentMap } from "near-sdk-as";
+import * as model from "../assembly/models";
+import * as util from "../../utils";
+import * as contract from "../assembly";
 
-let contract: Contract
+/**
+ * == CONFIG VALUES ============================================================
+ */
+const VEHICLE_GARAGE_ACCOUNT_ID = "vehicleGarage";
 
-beforeEach(() => {
-  contract = new Contract()
-})
+/**
+ * == HELPER FUNCTIONS =========================================================
+ */
+const useVehicleGarageAsPredecessor = (): void => {
+  VMContext.setPredecessor_account_id(VEHICLE_GARAGE_ACCOUNT_ID);
+};
 
-describe("Contract", () => {
-  // VIEW method tests
+const doInitialize = (): void => {
+  useVehicleGarageAsPredecessor();
+  contract.init();
+};
 
-  it("says hello", () => {
-    expect(contract.helloWorld()).toStrictEqual("hello world")
-  })
+const vehicles = (): PersistentMap<util.VehicleId, model.Vehicle> => {
+  return new PersistentMap<util.VehicleId, model.Vehicle>("v");
+};
 
-  it("reads data", () => {
-    expect(contract.read("some key")).toStrictEqual("🚫 Key [ some key ] not found in storage. ( storage [ 0 bytes ] )")
-  })
+const vehiclesServices = (): PersistentMap<
+  util.VehicleId,
+  model.VehicleService
+> => {
+  return new PersistentMap<util.VehicleId, model.VehicleService>("vs");
+};
 
-  // CHANGE method tests
+/**
+ * == UNIT TESTS ==============================================================
+ */
 
-  it("saves data to contract storage", () => {
-    expect(contract.write("some-key", "some value")).toStrictEqual("✅ Data saved. ( storage [ 18 bytes ] )")
-  })
-})
+describe("vehicleGarage initialization", () => {
+  beforeEach(useVehicleGarageAsPredecessor);
+
+  it("creates a new vehicleGarage", () => {
+    contract.init();
+    const vg = contract.get_vehicle_garage();
+
+    expect(vg.creator).toBe(VEHICLE_GARAGE_ACCOUNT_ID);
+  });
+});
