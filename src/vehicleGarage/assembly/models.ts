@@ -67,7 +67,7 @@ export class VehicleGarage {
     owner: AccountId,
     vehicleNotes: string,
     dateAcquired: string
-  ): void {
+  ): Vehicle {
     let newVehicle = new Vehicle(
       year,
       make,
@@ -77,6 +77,7 @@ export class VehicleGarage {
       vehicleNotes
     );
     vehicles.set(newVehicle.id, newVehicle);
+    return newVehicle;
   }
 
   static update_vehicle(
@@ -187,7 +188,8 @@ export class VehicleGarage {
   }
 }
 
-const vehicles = new PersistentMap<VehicleId, Vehicle>("v");
-const vehicleService = new PersistentMap<VehicleServiceId, VehicleService>(
-  "vs"
-);
+export const vehicles = new PersistentMap<VehicleId, Vehicle>("v");
+export const vehicleService = new PersistentMap<
+  VehicleServiceId,
+  VehicleService
+>("vs");

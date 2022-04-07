@@ -20,28 +20,29 @@ const doInitialize = (): void => {
   contract.init();
 };
 
-const vehicles = (): PersistentMap<util.VehicleId, model.Vehicle> => {
-  return new PersistentMap<util.VehicleId, model.Vehicle>("v");
-};
-
-const vehiclesServices = (): PersistentMap<
-  util.VehicleId,
-  model.VehicleService
-> => {
-  return new PersistentMap<util.VehicleId, model.VehicleService>("vs");
-};
-
 /**
  * == UNIT TESTS ==============================================================
  */
 
 describe("vehicleGarage initialization", () => {
-  beforeEach(useVehicleGarageAsPredecessor);
+  beforeEach(doInitialize);
 
   it("creates a new vehicleGarage", () => {
-    contract.init();
     const vg = contract.get_vehicle_garage();
 
     expect(vg.creator).toBe(VEHICLE_GARAGE_ACCOUNT_ID);
+  });
+
+  it("creates a new vehicle", () => {
+    const newVehicle = contract.add_vehicle(
+      "2015",
+      "mini",
+      "countryman",
+      "phoenixpulsar.testnet",
+      "new",
+      "20150101"
+    );
+
+    expect(model.vehicles.get(newVehicle.id)).toStrictEqual(newVehicle);
   });
 });
