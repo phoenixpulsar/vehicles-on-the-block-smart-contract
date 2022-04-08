@@ -139,7 +139,7 @@ export class VehicleGarage {
     vehicleId: VehicleId,
     serviceDate: string,
     serviceNotes: string
-  ): void {
+  ): VehicleService {
     let newVehicleService = new VehicleService(
       vehicleId,
       serviceDate,
@@ -147,6 +147,7 @@ export class VehicleGarage {
     );
     vehicleService.set(newVehicleService.id, newVehicleService);
     VehicleGarage.add_service_id(vehicleId, newVehicleService.id);
+    return newVehicleService;
   }
 
   static add_service_id(

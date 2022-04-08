@@ -45,4 +45,26 @@ describe("vehicleGarage initialization", () => {
 
     expect(model.vehicles.get(newVehicle.id)).toStrictEqual(newVehicle);
   });
+
+  it("creates a new vehicle and add a service", () => {
+    const newVehicle = contract.add_vehicle(
+      "2018",
+      "ford",
+      "f-150",
+      "phoenixpulsar.testnet",
+      "new",
+      "20180101"
+    );
+
+    const newService = contract.add_vehicle_service(
+      newVehicle.id,
+      "2019",
+      "change oil"
+    );
+    let newVehicleWithService = model.vehicles.get(newVehicle.id);
+    if (newVehicleWithService !== null) {
+      expect(newVehicleWithService.serviceIds.has(newService.id));
+    }
+    expect(model.vehicleService.get(newService.id)).toStrictEqual(newService);
+  });
 });

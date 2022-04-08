@@ -5,7 +5,7 @@ import {
   AccountId,
   GARAGE_KEY,
 } from "../../utils";
-import { Vehicle, VehicleGarage } from "./models";
+import { Vehicle, VehicleGarage, VehicleService } from "./models";
 
 export function init(): void {
   VehicleGarage.create_garage();
@@ -60,9 +60,13 @@ export function add_vehicle_service(
   vehicleId: VehicleId,
   serviceDate: string,
   serviceNotes: string
-): void {
+): VehicleService {
   assert_contract_is_initialized();
-  VehicleGarage.add_vehicle_service(vehicleId, serviceDate, serviceNotes);
+  return VehicleGarage.add_vehicle_service(
+    vehicleId,
+    serviceDate,
+    serviceNotes
+  );
 }
 export function update_vehicle_service(
   vehicleServiceId: VehicleServiceId,
